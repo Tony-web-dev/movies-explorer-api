@@ -9,6 +9,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT, DataBaseURL } = require('./utils/constants');
 const errorHandler = require('./middlewares/errorHandler');
 const router = require('./routes');
+const rateLimit = require('./middlewares/rateLimit');
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,7 @@ mongoose.connect(DataBaseURL, {
 });
 
 app.use(requestLogger);
+app.use(rateLimit);
 app.use(router);
 app.use(errorLogger);
 app.use(errors());
