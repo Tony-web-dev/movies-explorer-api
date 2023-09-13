@@ -56,7 +56,7 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV === 'production' ? SECRET_KEY : 'dev-secret', { expiresIn: '7d' });
       res.send({ token });
     })
     .catch(() => next(new UnauthorizedError('Указаны неправильные почта или пароль')));
