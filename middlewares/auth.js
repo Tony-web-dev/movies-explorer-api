@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
   const token = authorization.replace('Bearer ', '');
   let payload;
   try {
-    payload = jwt.verify(token, process.env.NODE_ENV === 'production' ? SECRET_KEY : 'dev-secret');
+    payload = jwt.verify(token, SECRET_KEY);
   } catch (error) {
     return next(new UnauthorizedError('Необходима авторизация'));
   }
